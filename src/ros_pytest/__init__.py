@@ -18,6 +18,8 @@ def get_additional_args(argv):
     for arg in argv[1:]:
         if arg.startswith('__') or arg.startswith('--gtest_output'):
             continue
+        if '--text' == arg:
+            arg = '-s'
         args.append(arg)
     return args
 
