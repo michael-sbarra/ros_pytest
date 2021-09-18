@@ -37,7 +37,13 @@ def create_cache_dir_args(version, output_file):
 def run_pytest(argv):
     output_file = get_output_file(argv)
     additional_args = get_additional_args(argv)
-    test_module = rospy.get_param('test_module')
+    if rospy.has_param('test_module'):
+        test_module = rospy.get_param('test_module')
+    else:
+        for i in rospy.get_param_names():
+            if 'test_module' in i:
+                test_module = rospy.get_param(i)
+                break
     module_path = os.path.realpath(test_module)
     cache_dir_args = create_cache_dir_args(pytest.__version__, output_file)
 
